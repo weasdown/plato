@@ -3,6 +3,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from satcat.formats import DataStatusCode, OpsStatusCode
+
 data: Path = Path('./data')
 satcat_csv: Path = data / 'satcat.csv'
 satcat_xlsx: Path = data / 'satcat.xlsx'
@@ -32,7 +34,16 @@ date_format: str = '%d/%m/%Y'  # The date format used for the LAUNCH_DATE and DE
 
 
 def load_satcat(file: Path) -> pd.DataFrame:
-    df: pd.DataFrame = pd.read_csv(file, dtype=datatypes, parse_dates=[6, 8], date_format=date_format)
+    df: pd.DataFrame = pd.read_csv(file, dtype=datatypes,
+                                   # index_col='OBJECT_ID',
+                                   parse_dates=[6, 8],
+                                   date_format=date_format)
+
+    # Replace status code columns with their respective enums from the satcat package.
+    # TODO fix type warnings
+    df['OPS_STATUS_CODE'] = [OpsStatusCode(code) for code in df['OPS_STATUS_CODE']]
+    df['DATA_STATUS_CODE'] = [DataStatusCode(code) for code in df['DATA_STATUS_CODE']]
+
     print(f'Loaded DataFrame from {file}\n')
     return df
 
