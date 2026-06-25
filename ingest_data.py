@@ -28,9 +28,11 @@ datatypes = {'OBJECT_NAME': str,
              'ORBIT_TYPE': str,
              }
 
+date_format: str = '%d/%m/%Y'  # The date format used for the LAUNCH_DATE and DECAY_DATE fields.
+
 
 def load_satcat(file: Path) -> pd.DataFrame:
-    df: pd.DataFrame = pd.read_csv(file, dtype=datatypes, parse_dates=[6, 8], date_format='%d/%m/%Y')
+    df: pd.DataFrame = pd.read_csv(file, dtype=datatypes, parse_dates=[6, 8], date_format=date_format)
     print(f'Loaded DataFrame from {file}\n')
     return df
 
