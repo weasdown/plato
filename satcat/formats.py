@@ -130,3 +130,5 @@ class OpsStatusCode(Enum):
 
     def __repr__(self) -> str:
         return f'OpsStatusCode.{self.name}'
+
+# TODO add enums for ORBIT_CENTER, ORBIT_TYPE
