@@ -15,4 +15,8 @@ def load_satcat(file: Path) -> pd.DataFrame:
 
 # Load the SATCAT from the .csv file into a pandas DataFrame.
 satcat: pd.DataFrame = load_satcat(satcat_csv)
-print(satcat.values[0])
+
+headers = satcat.columns.to_list()
+print(f'{headers = }\n')
+
+print(f'First 10 rows: {satcat.head(10)}\n')
